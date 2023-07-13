@@ -5,7 +5,7 @@
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          Math <KatexFormula formula="$\LaTeX$"/>
+          <KatexFormula formula="Math $\LaTeX$"/>
         </q-toolbar-title>
 
         <div>by DarXs</div>
@@ -15,7 +15,7 @@
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
         <q-item-label header>
-          Essential Links
+          相关链接
         </q-item-label>
 
         <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
@@ -35,13 +35,13 @@ import KatexFormula from 'src/components/katex/KatexFormula.vue';
 
 const essentialLinks: EssentialLinkProps[] = [
   {
-    title: 'Github',
+    title: 'Github 仓库',
     caption: 'Dar-Xs/math-latex-client',
     icon: 'code',
     link: 'https://github.com/Dar-Xs/math-latex-client'
   },
   {
-    title: 'Telegram Chat Group',
+    title: 'Telegram 讨论组',
     caption: 'DarXs_Math_LaTeX',
     icon: 'chat',
     link: 'https://t.me/DarXs_Math_LaTeX'

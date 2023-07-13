@@ -11,7 +11,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('components/katex/KatexFormulaDemo.vue'),
       },
       {
-        path: 'question',
+        path: 'question/:chapter/:sn',
         component: () => import('components/question/QuestionDemo.vue'),
       },
     ],
