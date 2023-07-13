@@ -2,7 +2,22 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/demo',
+    component: () => import('layouts/MathLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/IndexPage.vue') },
+      {
+        path: 'katex',
+        component: () => import('components/katex/KatexFormulaDemo.vue'),
+      },
+      {
+        path: 'question',
+        component: () => import('components/question/QuestionDemo.vue'),
+      },
+    ],
+  },
+  {
+    path: '/quasar/demo',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
   },

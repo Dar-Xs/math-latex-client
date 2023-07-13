@@ -1,6 +1,6 @@
 # Math LaTeX (math-latex)
 
-A Quasar Project
+用Katex渲染公式的数学刷题平台，这是该平台的前端代码库
 
 ## Install the dependencies
 ```bash
