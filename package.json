@@ -16,8 +16,10 @@
     "@quasar/extras": "^1.16.5",
     "axios": "^1.2.1",
     "katex": "^0.16.8",
+    "next": "^13.4.9",
     "pinia": "^2.0.11",
     "quasar": "^2.12.2",
+    "tablestore": "^5.4.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
@@ -25,6 +27,7 @@
     "@quasar/app-vite": "^1.4.3",
     "@types/katex": "^0.16.1",
     "@types/node": "^12.20.21",
+    "@types/tablestore": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "autoprefixer": "^10.4.2",
