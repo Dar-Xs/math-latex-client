@@ -66,7 +66,7 @@ export default async function handler(
         data: {
           chapter: chapter,
           sn: sn,
-          PK: PK,
+          params: params,
         },
       });
     });
