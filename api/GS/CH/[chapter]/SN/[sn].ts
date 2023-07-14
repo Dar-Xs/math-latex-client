@@ -25,16 +25,19 @@ export default async function handler(
   const chapter = parseInt(req.query.chapter as string);
   const sn = parseInt(req.query.sn as string);
 
+  const PK: TableStore.PrimaryKeyInput = [
+    { CHAPTER: Long.fromNumber(chapter)},
+    { SN: Long.fromNumber(sn) },
+  ]
+
   const params = {
     tableName: 'IMG_GS',
-    primaryKey: [
-      { CHAPTER: Long.fromNumber(chapter), SN: Long.fromNumber(sn) },
-    ],
+    primaryKey: PK,
     maxVersions: 1, //最多可读取的版本数，设置为2即代表最多可读取2个版本。
   };
 
   await new Promise<TableStore.Row>((resolve, reject) => {
-    client.getRow(params, (err, data) => {
+    client.getRow(params , (err, data) => {
       if (err || data.row===undefined) {
         reject(err);
       } else {
