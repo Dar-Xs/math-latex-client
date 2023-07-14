@@ -56,7 +56,7 @@ export default async function handler(
         convert[attr.columnName] = attr.columnValue;
       });
 
-      success(res, data);
+      success(res, convert);
     })
     .catch((err) => {
       error(res, err.message);
@@ -74,6 +74,7 @@ function error(res: NextApiResponse, message: string) {
 function success(res: NextApiResponse, data: any) {
   res.status(200).send({
     success: true,
+    message: data.QUESTION === undefined ? 'png' : 'latex',
     data: {
       question: base64IfNull(data.QUESTION, data.IMG0),
       choices: [
