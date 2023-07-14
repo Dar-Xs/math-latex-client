@@ -26,7 +26,7 @@ const hint = ref(String.raw`因$\sin x$、$\sin 2x$、$\sin 3x$最小正周期�
 
 
 const fetchQuestionData = async () => {
-  const body = await api.get(`/GS/CH/${chapterId.value}/SN/${questionId.value}`);
+  const body = await api.get(`/api/GS/CH/${chapterId.value}/SN/${questionId.value}`);
   
   if (body.data.success) {
     const data = body.data.data;
