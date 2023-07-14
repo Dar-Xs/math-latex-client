@@ -59,7 +59,12 @@ export default async function handler(
       success(res, data);
     })
     .catch((err) => {
-      error(res,err.message);
+      // error(res,err.message);
+      res.status(500).send({
+        success: false,
+        message: err.message,
+        data: err,
+      });
     });
 }
 
