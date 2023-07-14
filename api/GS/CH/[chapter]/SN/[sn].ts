@@ -10,11 +10,11 @@ const client = new TableStore.Client({
   maxRetries: 5, //默认20次重试，可以省略此参数。
 });
 
-function base64IfNull(str: string, blob:Buffer) {
+function base64IfNull(str: string, blob: Buffer) {
   if (str) {
     return str;
   } else {
-    return "data:image/png;base64," + Buffer.from(blob).toString("base64");
+    return 'data:image/png;base64,' + Buffer.from(blob).toString('base64');
   }
 }
 
@@ -26,9 +26,9 @@ export default async function handler(
   const sn = parseInt(req.query.sn as string);
 
   const PK: TableStore.PrimaryKeyInput = [
-    { CHAPTER: Long.fromNumber(chapter)},
+    { CHAPTER: Long.fromNumber(chapter) },
     { SN: Long.fromNumber(sn) },
-  ]
+  ];
 
   const params = {
     tableName: 'IMG_GS',
@@ -37,8 +37,8 @@ export default async function handler(
   };
 
   await new Promise<TableStore.Row>((resolve, reject) => {
-    client.getRow(params , (err, data) => {
-      if (err || data.row===undefined) {
+    client.getRow(params, (err, data) => {
+      if (err || data.row === undefined) {
         reject(err);
       } else {
         resolve(data.row);
@@ -47,15 +47,15 @@ export default async function handler(
   })
     .then((data) => {
       const convert: { [key: string]: any } = {};
-      if(!data.attributes){
-        error(res,"no data");
-        return
+      if (!data.attributes) {
+        error(res, 'no data');
+        return;
       }
 
-      data.attributes.forEach((attr)=>{
-        convert[attr.columnName] = attr.columnValue
+      data.attributes.forEach((attr) => {
+        convert[attr.columnName] = attr.columnValue;
       });
-      
+
       success(res, data);
     })
     .catch((err) => {
@@ -63,12 +63,15 @@ export default async function handler(
       res.status(500).send({
         success: false,
         message: err.message,
-        data: err,
+        data: {
+          chapter: chapter,
+          sn: sn,
+        },
       });
     });
 }
 
-function error(res:NextApiResponse, message:string) {
+function error(res: NextApiResponse, message: string) {
   res.status(500).send({
     success: false,
     message: message,
@@ -76,7 +79,7 @@ function error(res:NextApiResponse, message:string) {
   });
 }
 
-function success(res:NextApiResponse, data:any) {
+function success(res: NextApiResponse, data: any) {
   res.status(200).send({
     success: true,
     data: {
