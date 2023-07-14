@@ -10,7 +10,7 @@ const client = new TableStore.Client({
   maxRetries: 5, //默认20次重试，可以省略此参数。
 });
 
-function base64IfNull(str: string, blob: Buffer) {
+function base64IfNull(str: string | undefined, blob: Buffer) {
   if (str) {
     return str;
   } else {
@@ -59,16 +59,7 @@ export default async function handler(
       success(res, data);
     })
     .catch((err) => {
-      // error(res,err.message);
-      res.status(500).send({
-        success: false,
-        message: err.message,
-        data: {
-          chapter: chapter,
-          sn: sn,
-          params: params,
-        },
-      });
+      error(res, err.message);
     });
 }
 
