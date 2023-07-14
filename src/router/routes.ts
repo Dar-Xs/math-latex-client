@@ -2,6 +2,11 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '/',
+    component: () => import('layouts/MathLayout.vue'),
+    children: [{ path: '', component: () => import('pages/QuickLinks.vue') }],
+  },
+  {
     path: '/demo',
     component: () => import('layouts/MathLayout.vue'),
     children: [

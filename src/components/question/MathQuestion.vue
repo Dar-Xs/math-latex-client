@@ -37,8 +37,10 @@
                 <div v-else :class="['bg-black', {
                   'bg-green': check && opt.value == answerIndex,
                   'bg-red': check && opt.value != answerIndex && opt.value == group
-                }]" style="display: inline-flex">
-                  <img :src="opt.label" style="mix-blend-mode: lighten;transform: scale(1.02); margin: -0.5%;"/>
+                }]" style="display: inline-flex;">
+                  <div style="display: inline-flex; margin :-1px">
+                    <img :src="opt.label" style="mix-blend-mode: screen;" />
+                  </div>
                 </div>
 
               </q-intersection>
@@ -49,7 +51,7 @@
 
       <q-card-section class="q-py-xs">
         <q-slide-transition>
-          <div v-show="check">
+          <div v-show="check" v-if="!loading" class="row items-start">
             解析：
             <KatexFormula v-if="!imgMod" :formula="hint" />
             <img v-else :src="hint" />
@@ -70,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch, toRef } from 'vue';
 import KatexFormula from '../katex/KatexFormula.vue';
 import { shuffle } from '../../utils/array'
 import PushButton from '../PushButton.vue';
@@ -88,16 +90,21 @@ const props = defineProps<{
   loading?: boolean
 }>();
 
+// 判断是否渲染latex
 const imgMod = computed(() => {
   return props.question.startsWith("data:image");
 });
 
-
+//重置选项位置
 const map: number[] = [];
 for (let i = 0; i < props.choices.length; i++) {
   map.push(i);
 }
-shuffle(map);
+let label = toRef(props, 'loading');
+watch(label, () => {
+  shuffle(map);
+});
+
 const options = computed(() => {
   const opts = props.choices
     .map((choice, index) => {
@@ -139,7 +146,8 @@ const goto = (offset: number) => {
   const currentPath = router.currentRoute.value.path
   const parentPath = currentPath.substring(0, currentPath.lastIndexOf('/'))
   const lastPath = currentPath.substring(currentPath.lastIndexOf('/') + 1)
-  router.push(parentPath + '/' + (parseInt(lastPath) + offset));
+  check.value = false;
+  router.replace(parentPath + '/' + (parseInt(lastPath) + offset));
 }
 
 </script>

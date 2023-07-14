@@ -1,6 +1,23 @@
 <template>
   <Question :question="question" :choices="choices" :answer-index="answer" :hint="hint" random :difficulty="difficulty"
     :questionId="parseInt(questionId as string)" :loading="loading" />
+
+
+  <q-dialog v-model="alert">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">出错了</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        {{ alertMessage }}
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">
@@ -26,6 +43,8 @@ const answer = ref(0);
 const difficulty = ref(0);
 const hint = ref(String.raw`因$\sin x$、$\sin 2x$、$\sin 3x$最小正周期分别是: $$2\pi,\pi,\frac{2\pi}{3}$$故$f(x)$的最小正周期为$2\pi$.`);
 
+const alert= ref(false)
+const alertMessage= ref("")
 const dev = import.meta.env.VITE_ENV == "development"
 const loading = ref(true);
 const fetchQuestionData = async () => {
@@ -41,8 +60,8 @@ const fetchQuestionData = async () => {
     difficulty.value = data.difficulty
     loading.value = false;
   } else {
-    console.log(body.data);
-    loading.value = false;
+    alertMessage.value = body.data.message
+    alert.value = true;
   }
 };
 

@@ -48,7 +48,7 @@ export default async function handler(
     .then((data) => {
       const convert: { [key: string]: any } = {};
       if (!data.attributes) {
-        error(res, 'no data');
+        error(res.status(200), '没有这一题');
         return;
       }
 
@@ -59,12 +59,12 @@ export default async function handler(
       success(res, convert);
     })
     .catch((err) => {
-      error(res, err.message);
+      error(res.status(500), err.message);
     });
 }
 
 function error(res: NextApiResponse, message: string) {
-  res.status(500).send({
+  res.send({
     success: false,
     message: message,
     data: {},

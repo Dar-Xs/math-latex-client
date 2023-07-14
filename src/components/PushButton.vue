@@ -40,8 +40,6 @@ const emit = defineEmits(['update:pushed'])
 
 function updateValue() {
   emit('update:pushed', !props.pushed);
-  console.log(123);
-  
 }
 
 </script>

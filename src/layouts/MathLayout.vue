@@ -5,11 +5,12 @@
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <KatexFormula formula="Math $\LaTeX$"/>
+          <KatexFormula formula="Math $\LaTeX$" />
         </q-toolbar-title>
 
         <div>by DarXs</div>
       </q-toolbar>
+      <q-ajax-bar color="secondary" size="0.4rem"/>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
