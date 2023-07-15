@@ -36,3 +36,6 @@ yarn-error.log*
 # local .env files
 .env.local*
 .env
+
+# package manage lock file
+pnpm-lock.yaml
