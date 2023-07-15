@@ -44,8 +44,14 @@ const essentialLinks: EssentialLinkProps[] = [
   {
     title: 'Telegram 讨论组',
     caption: 'DarXs_Math_LaTeX',
-    icon: 'chat',
+    icon: 'telegram',
     link: 'https://t.me/DarXs_Math_LaTeX'
+  },
+  {
+    title: 'Discord 频道',
+    caption: 'DarXs微分/math-latex',
+    icon: 'discord',
+    link: 'https://discord.com/invite/SBhtG9mE5b'
   }
 ];
 
