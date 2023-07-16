@@ -76,10 +76,6 @@ export default async function handler(
     });
   })
     .then((data) => {
-      if (!data.attributes) {
-        error(res.status(200), '没有这一题');
-        return;
-      }
       res.status(200).send({
         success: true,
         message: 'send',

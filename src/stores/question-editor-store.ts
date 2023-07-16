@@ -61,10 +61,10 @@ export const useEditorStore = defineStore('editor-source', {
       const body = await api.post(`/api/put/${db}/CH/${chapter}/SN/${sn}`, {
         key: this.password,
         QUESTION: this.formula.question,
-        CHIOCE1: this.formula.choices[0],
-        CHIOCE2: this.formula.choices[1],
-        CHIOCE3: this.formula.choices[2],
-        CHIOCE4: this.formula.choices[3],
+        CHOICE1: this.formula.choices[0],
+        CHOICE2: this.formula.choices[1],
+        CHOICE3: this.formula.choices[2],
+        CHOICE4: this.formula.choices[3],
         HINT: this.formula.hint,
       });
       if (body.data.success) {
