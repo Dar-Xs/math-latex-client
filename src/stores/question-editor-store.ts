@@ -60,12 +60,12 @@ export const useEditorStore = defineStore('editor-source', {
     async submitFormula(db: string, chapter: number, sn: number) {
       const body = await api.post(`/api/put/${db}/CH/${chapter}/SN/${sn}`, {
         key: this.password,
-        QUESTION: this.questionData.question,
-        CHIOCE1: this.questionData.choices[0],
-        CHIOCE2: this.questionData.choices[1],
-        CHIOCE3: this.questionData.choices[2],
-        CHIOCE4: this.questionData.choices[3],
-        HINT: this.questionData.hint,
+        QUESTION: this.formula.question,
+        CHIOCE1: this.formula.choices[0],
+        CHIOCE2: this.formula.choices[1],
+        CHIOCE3: this.formula.choices[2],
+        CHIOCE4: this.formula.choices[3],
+        HINT: this.formula.hint,
       });
       if (body.data.success) {
         const data = body.data;
