@@ -67,24 +67,25 @@ export default async function handler(
   await new Promise<TableStore.Row>((resolve, reject) => {
     client.updateRow(params, (err, data) => {
       if (err || data.row === undefined) {
+        console.log("error:", err);
         reject(err);
       } else {
         resolve(data.row);
+        console.log(JSON.stringify(data));
       }
     });
   })
     .then((data) => {
-      const convert: { [key: string]: any } = {};
       if (!data.attributes) {
         error(res.status(200), '没有这一题');
         return;
       }
-
-      data.attributes.forEach((attr) => {
-        convert[attr.columnName] = attr.columnValue;
+      res.status(200).send({
+        success: true,
+        message: 'send',
+        data: data,
       });
-
-      success(res, convert);
+      console.log();
     })
     .catch((err) => {
       error(res.status(500), err.message);
@@ -101,10 +102,4 @@ function error(res: NextApiResponse, message: string) {
   });
 }
 
-function success(res: NextApiResponse, data: any) {
-  res.status(200).send({
-    success: true,
-    message: 'send',
-    data: data,
-  });
-}
+
