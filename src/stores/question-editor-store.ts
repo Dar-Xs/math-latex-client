@@ -7,24 +7,15 @@ export const useEditorStore = defineStore('editor-source', {
   state: () => ({
     questionData: {
       question: 'loading',
-      choices: [
-        'loading',
-        'loading',
-        'loading',
-        'loading',
-      ],
+      choices: ['loading', 'loading', 'loading', 'loading'],
       hint: 'loading',
     },
     formula: {
       question: 'loading',
-      choices: [
-        'loading',
-        'loading',
-        'loading',
-        'loading',
-      ],
+      choices: ['loading', 'loading', 'loading', 'loading'],
       hint: 'loading',
     },
+    password: '',
   }),
   getters: {},
   actions: {
@@ -68,6 +59,7 @@ export const useEditorStore = defineStore('editor-source', {
     },
     async submitFormula(db: string, chapter: number, sn: number) {
       const body = await api.post(`/api/put/${db}/CH/${chapter}/SN/${sn}`, {
+        key: this.password,
         QUESTION: this.questionData.question,
         CHIOCE1: this.questionData.choices[0],
         CHIOCE2: this.questionData.choices[1],
@@ -78,7 +70,7 @@ export const useEditorStore = defineStore('editor-source', {
       if (body.data.success) {
         const data = body.data;
         console.log(data);
-      }else {
+      } else {
         console.log(body.data);
       }
     },

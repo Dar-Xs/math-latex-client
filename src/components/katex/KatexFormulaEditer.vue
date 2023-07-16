@@ -1,5 +1,12 @@
 <template>
   <div class="q-pa-sm q-mx-auto q-mt-lg" style="max-width: 1440px">
+    <q-input
+      class="q-mb-md"
+      v-model="password"
+      filled
+      type="password"
+      hint="Password"
+    />
     <KatexFormulaEditerRow
       label="题目"
       :img="editorStore.questionData.question"
@@ -41,6 +48,7 @@
       class="q-mb-md"
     />
   </div>
+  <div class="q-mx-auto"></div>
   <div class="q-pa-sm q-mx-auto q-mt-lg" style="max-width: 720px">
     <q-btn-group push class="full-width">
       <q-btn
@@ -76,6 +84,13 @@ import { useEditorStore } from 'stores/question-editor-store';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const editorStore = useEditorStore();
+
+const password = computed({
+  get: () => editorStore.password,
+  set: (newValue) => {
+    editorStore.password = newValue;
+  },
+});
 
 const question = computed({
   get: () => editorStore.formula.question,
