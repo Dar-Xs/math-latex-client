@@ -88,6 +88,8 @@ export default async function handler(
     })
     .catch((err) => {
       error(res.status(500), err.message);
+      console.log(JSON.stringify(req.body));
+      
     });
 }
 
