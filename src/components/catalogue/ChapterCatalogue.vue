@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import catalogue from 'assets/catalogue/catalogue.json';
 const GS = catalogue[0].catalogue;

@@ -4,7 +4,17 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MathLayout.vue'),
-    children: [{ path: '', component: () => import('components/catalogue/ChapterCatalogue.vue') }],
+    children: [
+      {
+        path: '',
+        component: () => import('components/catalogue/ChapterCatalogue.vue'),
+      },
+    ],
+  },
+  {
+    path: '/editor/:db/:chapter/:sn',
+    name: 'question-latex-editor',
+    component: () => import('components/katex/KatexFormulaEditer.vue')
   },
   {
     path: '/question',
