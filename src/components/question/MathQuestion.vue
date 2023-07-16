@@ -1,19 +1,22 @@
 <template>
-  <div class="q-pa-lg q-mx-auto" style="max-width: 720px;">
+  <div class="q-pa-lg q-mx-auto" style="max-width: 720px">
     <q-card>
       <div v-if="!loading">
         <q-badge :color="diffTag.color" floating>{{ diffTag.label }}</q-badge>
       </div>
       <q-card-section>
-        <div class="q-px-md" style="display: block;">
+        <div class="q-px-md" style="display: block">
           <span class="row items-center">
-            <span class="q-pr-xs"> {{ questionId + "." }}</span>
-            <q-skeleton v-if="loading" type="rect" style="width:80%;height: 2rem;" />
+            <span class="q-pr-xs"> {{ questionId + '.' }}</span>
+            <q-skeleton
+              v-if="loading"
+              type="rect"
+              style="width: 80%; height: 2rem"
+            />
             <q-intersection v-else transition="jump-right" once>
               <KatexFormula v-if="!imgMod" :formula="question" />
               <img v-else :src="question" />
             </q-intersection>
-
           </span>
         </div>
       </q-card-section>
@@ -23,26 +26,51 @@
         <q-option-group v-model="group" :options="options" color="primary">
           <template v-slot:label="opt">
             <span class="row items-center">
-              <span :class="['q-pr-xs', {
-                'text-green': check && opt.value == answerIndex,
-                'text-red': check && opt.value != answerIndex && opt.value == group
-              }]">{{ String.fromCharCode("A".charCodeAt(0) + opt['index']) + "." }}</span>
+              <span
+                :class="[
+                  'q-pr-xs',
+                  {
+                    'text-green': check && opt.value == answerIndex,
+                    'text-red':
+                      check && opt.value != answerIndex && opt.value == group,
+                  },
+                ]"
+                >{{
+                  String.fromCharCode('A'.charCodeAt(0) + opt['index']) + '.'
+                }}</span
+              >
 
-              <q-skeleton v-if="loading" type="rect" style="width: 200px;height: 1.5rem;" />
+              <q-skeleton
+                v-if="loading"
+                type="rect"
+                style="width: 200px; height: 1.5rem"
+              />
               <q-intersection v-else transition="jump-right" once>
-                <KatexFormula v-if="!imgMod" :class="{
-                  'text-green': check && opt.value == answerIndex,
-                  'text-red': check && opt.value != answerIndex && opt.value == group
-                }" :formula="opt.label" />
-                <div v-else :class="['bg-black', {
-                  'bg-green': check && opt.value == answerIndex,
-                  'bg-red': check && opt.value != answerIndex && opt.value == group
-                }]" style="display: inline-flex;">
-                  <div style="display: inline-flex; margin :-1px">
-                    <img :src="opt.label" style="mix-blend-mode: screen;" />
+                <KatexFormula
+                  v-if="!imgMod"
+                  :class="{
+                    'text-green': check && opt.value == answerIndex,
+                    'text-red':
+                      check && opt.value != answerIndex && opt.value == group,
+                  }"
+                  :formula="opt.label"
+                />
+                <div
+                  v-else
+                  :class="[
+                    'bg-black',
+                    {
+                      'bg-green': check && opt.value == answerIndex,
+                      'bg-red':
+                        check && opt.value != answerIndex && opt.value == group,
+                    },
+                  ]"
+                  style="display: inline-flex"
+                >
+                  <div style="display: inline-flex; margin: -1px">
+                    <img :src="opt.label" style="mix-blend-mode: screen" />
                   </div>
                 </div>
-
               </q-intersection>
             </span>
           </template>
@@ -61,10 +89,27 @@
 
       <q-card-section class="row justify-center q-pt-sm">
         <q-btn-group push class="full-width">
-          <q-btn push class="full-width" label="上一题" icon="keyboard_arrow_left" @click="goto(-1)" />
-          <PushButton style="border: 1px solid rgba(0, 0, 0, 0.15); border-width: 0 1px;" class="full-width" label="答案解析"
-            icon="done" v-model:pushed="check" />
-          <q-btn push class="full-width" label="下一题" icon="keyboard_arrow_right" @click="goto(1)" />
+          <q-btn
+            push
+            class="full-width"
+            label="上一题"
+            icon="keyboard_arrow_left"
+            @click="goto(-1)"
+          />
+          <PushButton
+            style="border: 1px solid rgba(0, 0, 0, 0.15); border-width: 0 1px"
+            class="full-width"
+            label="答案解析"
+            icon="done"
+            v-model:pushed="check"
+          />
+          <q-btn
+            push
+            class="full-width"
+            label="下一题"
+            icon="keyboard_arrow_right"
+            @click="goto(1)"
+          />
         </q-btn-group>
       </q-card-section>
     </q-card>
@@ -74,25 +119,25 @@
 <script setup lang="ts">
 import { computed, ref, watch, toRef } from 'vue';
 import KatexFormula from '../katex/KatexFormula.vue';
-import { shuffle } from '../../utils/array'
+import { shuffle } from '../../utils/array';
 import PushButton from '../PushButton.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const props = defineProps<{
-  question: string
-  choices: string[]
-  answerIndex: number
-  hint: string
-  random?: boolean
-  difficulty: number
-  questionId: number
-  loading?: boolean
+  question: string;
+  choices: string[];
+  answerIndex: number;
+  hint: string;
+  random?: boolean;
+  difficulty: number;
+  questionId: number;
+  loading?: boolean;
 }>();
 
 // 判断是否渲染latex
 const imgMod = computed(() => {
-  return props.question.startsWith("data:image");
+  return props.question.startsWith('data:image');
 });
 
 //重置选项位置
@@ -106,20 +151,23 @@ watch(label, () => {
 });
 
 const options = computed(() => {
-  const opts = props.choices
-    .map((choice, index) => {
-      return {
-        value: index,
-        index: 0,
-        label: choice,
-        color: !check.value ? "primary" : (index == props.answerIndex ? "green" : "red")
-      }
-    })
+  const opts = props.choices.map((choice, index) => {
+    return {
+      value: index,
+      index: 0,
+      label: choice,
+      color: !check.value
+        ? 'primary'
+        : index == props.answerIndex
+        ? 'green'
+        : 'red',
+    };
+  });
   return opts
     .map((opt, index) => opts[map[index]])
     .map((opt, index) => {
       opt.index = index;
-      return opt
+      return opt;
     });
 });
 
@@ -127,29 +175,25 @@ const group = ref();
 const check = ref(false);
 
 const diffTag = computed(() => {
-  let ans = { label: "", color: "" };
+  let ans = { label: '', color: '' };
   switch (props.difficulty) {
     case 0:
-      ans = { label: "简单", color: "green" }
-      break
+      ans = { label: '简单', color: 'green' };
+      break;
     case 1:
-      ans = { label: "中等", color: "orange" }
-      break
+      ans = { label: '中等', color: 'orange' };
+      break;
     case 2:
-      ans = { label: "困难", color: "red" }
+      ans = { label: '困难', color: 'red' };
   }
   return ans;
-})
+});
+
+
 
 const goto = (offset: number) => {
-
-  const currentPath = router.currentRoute.value.path
-  const parentPath = currentPath.substring(0, currentPath.lastIndexOf('/'))
-  const lastPath = currentPath.substring(currentPath.lastIndexOf('/') + 1)
-  check.value = false;
-  router.replace(parentPath + '/' + (parseInt(lastPath) + offset));
-}
-
+  router.replace({name: 'single-question',params:{...router.currentRoute.value.params,sn:props.questionId+offset}});
+};
 </script>
 
 <style scoped>

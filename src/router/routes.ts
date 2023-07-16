@@ -4,7 +4,23 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MathLayout.vue'),
-    children: [{ path: '', component: () => import('pages/QuickLinks.vue') }],
+    children: [{ path: '', component: () => import('components/catalogue/ChapterCatalogue.vue') }],
+  },
+  {
+    path: '/question',
+    component: () => import('layouts/MathLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/QuickLinks.vue') },
+      {
+        path: ':db/:chapter/:sn',
+        name: 'single-question',
+        component: () => import('components/question/QuestionDemo.vue'),
+      },
+      {
+        path: 'catalogue',
+        component: () => import('components/catalogue/ChapterCatalogue.vue'),
+      },
+    ],
   },
   {
     path: '/demo',
@@ -18,6 +34,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'question/:chapter/:sn',
         component: () => import('components/question/QuestionDemo.vue'),
+      },
+      {
+        path: 'catalogue',
+        component: () => import('components/catalogue/ChapterCatalogue.vue'),
       },
     ],
   },
