@@ -57,7 +57,11 @@ export const useEditorStore = defineStore('editor-source', {
         this.formula.hint = nullCheck(data.hint);
       }
     },
-    async submitFormula(db: string, chapter: number, sn: number) {
+    async submitFormula(
+      db: string,
+      chapter: number,
+      sn: number
+    ): Promise<{ success: boolean; message: string }> {
       const body = await api.post(`/api/put/${db}/CH/${chapter}/SN/${sn}`, {
         key: this.password,
         QUESTION: this.formula.question,
@@ -68,10 +72,13 @@ export const useEditorStore = defineStore('editor-source', {
         HINT: this.formula.hint,
       });
       if (body.data.success) {
-        const data = body.data;
-        console.log(data);
+        return new Promise((resolve,reject)=>{
+          resolve(body.data)
+        })
       } else {
-        console.log(body.data);
+        return new Promise((resolve,reject)=>{
+          reject(body.data)
+        })
       }
     },
   },

@@ -82,6 +82,8 @@ import { computed, onMounted, watch } from 'vue';
 import KatexFormulaEditerRow from './KatexFormulaEditerRow.vue';
 import { useEditorStore } from 'stores/question-editor-store';
 import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+const $q = useQuasar();
 const router = useRouter();
 const editorStore = useEditorStore();
 
@@ -130,11 +132,34 @@ const hint = computed({
 });
 
 const submit = () => {
-  editorStore.submitFormula(
-    'GS',
-    parseInt(router.currentRoute.value.params.chapter as string),
-    parseInt(router.currentRoute.value.params.sn as string)
-  );
+  editorStore
+    .submitFormula(
+      'GS',
+      parseInt(router.currentRoute.value.params.chapter as string),
+      parseInt(router.currentRoute.value.params.sn as string)
+    )
+    .then((data) => {
+      $q.notify({
+        progress: true,
+        type: 'positive',
+        message: data.message,
+        icon: 'check_circle',
+        color: 'white',
+        textColor: 'primary',
+        position: 'bottom-right',
+      });
+    })
+    .catch((error) => {
+      $q.notify({
+        progress: true,
+        type: 'warning',
+        message: error.message,
+        icon: 'warning',
+        color: 'white',
+        textColor: 'red',
+        position: 'bottom-right',
+      });
+    });
 };
 
 onMounted(() => {
