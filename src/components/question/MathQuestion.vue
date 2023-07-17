@@ -14,8 +14,8 @@
               style="width: 80%; height: 2rem"
             />
             <q-intersection v-else transition="jump-right" once>
-              <KatexFormula v-if="!imgMod" :formula="question" />
-              <img v-else :src="question" />
+              <img v-if="question.startsWith('data:image')" :src="question" />
+              <KatexFormula v-else :formula="question" />
             </q-intersection>
           </span>
         </div>
@@ -46,17 +46,8 @@
                 style="width: 200px; height: 1.5rem"
               />
               <q-intersection v-else transition="jump-right" once>
-                <KatexFormula
-                  v-if="!imgMod"
-                  :class="{
-                    'text-green': check && opt.value == answerIndex,
-                    'text-red':
-                      check && opt.value != answerIndex && opt.value == group,
-                  }"
-                  :formula="opt.label"
-                />
                 <div
-                  v-else
+                  v-if="opt.label.startsWith('data:image')"
                   :class="[
                     'bg-black',
                     {
@@ -71,6 +62,15 @@
                     <img :src="opt.label" style="mix-blend-mode: screen" />
                   </div>
                 </div>
+                <KatexFormula
+                  v-else
+                  :class="{
+                    'text-green': check && opt.value == answerIndex,
+                    'text-red':
+                      check && opt.value != answerIndex && opt.value == group,
+                  }"
+                  :formula="opt.label"
+                />
               </q-intersection>
             </span>
           </template>
@@ -81,8 +81,8 @@
         <q-slide-transition>
           <div v-show="check" v-if="!loading" class="row items-start">
             解析：
-            <KatexFormula v-if="!imgMod" :formula="hint" />
-            <img v-else :src="hint" />
+            <img v-if="hint.startsWith('data:image')" :src="hint" />
+            <KatexFormula v-else :formula="hint" />
           </div>
         </q-slide-transition>
       </q-card-section>
@@ -192,7 +192,7 @@ const diffTag = computed(() => {
 
 
 const goto = (offset: number) => {
-  router.replace({name: 'single-question',params:{...router.currentRoute.value.params,sn:props.questionId+offset}});
+  router.push({name: 'single-question',params:{...router.currentRoute.value.params,sn:props.questionId+offset}});
 };
 </script>
 
