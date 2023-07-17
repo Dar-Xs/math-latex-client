@@ -192,6 +192,7 @@ const diffTag = computed(() => {
 
 
 const goto = (offset: number) => {
+  check.value = false
   router.push({name: 'single-question',params:{...router.currentRoute.value.params,sn:props.questionId+offset}});
 };
 </script>
