@@ -7,7 +7,7 @@
       <q-card-section>
         <div class="q-px-md" style="display: block">
           <span class="row items-center">
-            <span class="q-pr-xs"> {{ questionId + '.' }}</span>
+            <span class="q-pr-xs q-mb-auto"> {{ questionId + '.' }}</span>
             <q-skeleton
               v-if="loading"
               type="rect"

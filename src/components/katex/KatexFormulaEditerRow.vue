@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-4">
-      <q-card >
+      <q-card class="q-mb-md">
         <q-card-section v-if="!dense"> 渲染公式 </q-card-section>
         <q-separator v-if="!dense" inset />
         <q-card-section>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="col-4">
-      <q-card >
+      <q-card class="q-mb-md">
         <q-card-section>
           <q-input
             class="col"
