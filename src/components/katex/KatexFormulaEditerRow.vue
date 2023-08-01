@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-4">
-      <q-card class="full-height">
+      <q-card >
         <q-card-section v-if="!dense"> 渲染公式 </q-card-section>
         <q-separator v-if="!dense" inset />
         <q-card-section>
@@ -20,7 +20,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card v-if="genFormula" class="full-height">
+      <q-card v-if="genFormula" >
         <q-card-section v-if="!dense"> 参考渲染 </q-card-section>
         <q-separator v-if="!dense" inset />
         <q-card-section>
@@ -30,7 +30,7 @@
     </div>
 
     <div class="col-4">
-      <q-card class="full-height">
+      <q-card >
         <q-card-section>
           <q-input
             class="col"
@@ -41,7 +41,7 @@
           />
         </q-card-section>
       </q-card>
-      <q-card v-if="genFormula" class="full-height">
+      <q-card v-if="genFormula" >
         <q-card-section v-if="!dense"> 参考公式 </q-card-section>
         <q-separator v-if="!dense" inset />
         <q-card-section>
