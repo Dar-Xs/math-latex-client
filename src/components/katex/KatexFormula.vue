@@ -31,7 +31,7 @@ const elementArr = computed(() => {
       if (j % 2 != 0) {
         buffer.push(' ' + renderMath(inlineEles[j]) + ' ');
       } else {
-        buffer.push(inlineEles[j]);
+        buffer.push(inlineEles[j].replace('\n','</br>'));
       }
     }
   }
