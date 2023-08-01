@@ -22,7 +22,7 @@ const elementArr = computed(() => {
     }
     if (!elements[i].includes('$')) {
       //text
-      buffer.push(elements[i]);
+      buffer.push(elements[i].replace('\n','</br>'));
       continue;
     }
     const inlineEles = elements[i].split('$');

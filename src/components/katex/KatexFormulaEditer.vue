@@ -11,12 +11,14 @@
       label="题目"
       :img="editorStore.questionData.question"
       v-model:formula="question"
+      :gen-formula="latex_question"
       class="q-mb-md"
     />
     <KatexFormulaEditerRow
       label="选项1"
       :img="editorStore.questionData.choices[0]"
       v-model:formula="choice1"
+      :gen-formula="latex_choice1"
       class="q-mb-md"
       dense
     />
@@ -24,6 +26,7 @@
       label="选项2"
       :img="editorStore.questionData.choices[1]"
       v-model:formula="choice2"
+      :gen-formula="latex_choice2"
       class="q-mb-md"
       dense
     />
@@ -31,6 +34,7 @@
       label="选项3"
       :img="editorStore.questionData.choices[2]"
       v-model:formula="choice3"
+      :gen-formula="latex_choice3"
       class="q-mb-md"
       dense
     />
@@ -38,6 +42,7 @@
       label="选项4"
       :img="editorStore.questionData.choices[3]"
       v-model:formula="choice4"
+      :gen-formula="latex_choice4"
       class="q-mb-md"
       dense
     />
@@ -45,6 +50,7 @@
       label="解析"
       :img="editorStore.questionData.hint"
       v-model:formula="hint"
+      :gen-formula="latex_hint"
       class="q-mb-md"
     />
   </div>
@@ -128,6 +134,43 @@ const hint = computed({
   get: () => editorStore.formula.hint,
   set: (newValue) => {
     editorStore.formula.hint = newValue;
+  },
+});
+
+const latex_question = computed({
+  get: () => editorStore.formula.latex_question,
+  set: (newValue) => {
+    editorStore.formula.latex_question = newValue;
+  },
+});
+const latex_choice1 = computed({
+  get: () => editorStore.formula.latex_choices[0],
+  set: (newValue) => {
+    editorStore.formula.latex_choices[0] = newValue;
+  },
+});
+const latex_choice2 = computed({
+  get: () => editorStore.formula.latex_choices[1],
+  set: (newValue) => {
+    editorStore.formula.latex_choices[1] = newValue;
+  },
+});
+const latex_choice3 = computed({
+  get: () => editorStore.formula.latex_choices[2],
+  set: (newValue) => {
+    editorStore.formula.latex_choices[2] = newValue;
+  },
+});
+const latex_choice4 = computed({
+  get: () => editorStore.formula.latex_choices[3],
+  set: (newValue) => {
+    editorStore.formula.latex_choices[3] = newValue;
+  },
+});
+const latex_hint = computed({
+  get: () => editorStore.formula.latex_hint,
+  set: (newValue) => {
+    editorStore.formula.latex_hint = newValue;
   },
 });
 

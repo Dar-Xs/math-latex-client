@@ -13,26 +13,41 @@
 
     <div class="col-4">
       <q-card class="full-height">
-      <q-card-section v-if="!dense"> 渲染公式 </q-card-section>
-      <q-separator v-if="!dense" inset />
-      <q-card-section>
-        <KatexFormula :formula="formula" />
-      </q-card-section>
-    </q-card>
+        <q-card-section v-if="!dense"> 渲染公式 </q-card-section>
+        <q-separator v-if="!dense" inset />
+        <q-card-section>
+          <KatexFormula :formula="formula" />
+        </q-card-section>
+      </q-card>
+
+      <q-card v-if="genFormula" class="full-height">
+        <q-card-section v-if="!dense"> 参考渲染 </q-card-section>
+        <q-separator v-if="!dense" inset />
+        <q-card-section>
+          <KatexFormula :formula="genFormula" />
+        </q-card-section>
+      </q-card>
     </div>
 
     <div class="col-4">
       <q-card class="full-height">
-      <q-card-section>
-        <q-input
-          class="col"
-          v-model="value"
-          label="latex 公式"
-          placeholder="在这里输入公式"
-          autogrow
-        />
-      </q-card-section>
-    </q-card>
+        <q-card-section>
+          <q-input
+            class="col"
+            v-model="value"
+            label="latex 公式"
+            placeholder="在这里输入公式"
+            autogrow
+          />
+        </q-card-section>
+      </q-card>
+      <q-card v-if="genFormula" class="full-height">
+        <q-card-section v-if="!dense"> 参考公式 </q-card-section>
+        <q-separator v-if="!dense" inset />
+        <q-card-section>
+          {{ genFormula }}
+        </q-card-section>
+      </q-card>
     </div>
   </div>
 </template>
@@ -44,6 +59,7 @@ import KatexFormula from './KatexFormula.vue';
 const props = defineProps<{
   label: string;
   formula: string;
+  genFormula?: string;
   img: string;
   dense?: boolean;
 }>();

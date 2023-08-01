@@ -14,6 +14,9 @@ export const useEditorStore = defineStore('editor-source', {
       question: 'loading',
       choices: ['loading', 'loading', 'loading', 'loading'],
       hint: 'loading',
+      latex_question: 'loading',
+      latex_choices: ['loading', 'loading', 'loading', 'loading'],
+      latex_hint: 'loading',
     },
     password: '',
   }),
@@ -32,6 +35,12 @@ export const useEditorStore = defineStore('editor-source', {
       this.formula.choices[2] = 'loading';
       this.formula.choices[3] = 'loading';
       this.formula.hint = 'loading';
+      this.formula.latex_question = 'loading';
+      this.formula.latex_choices[0] = 'loading';
+      this.formula.latex_choices[1] = 'loading';
+      this.formula.latex_choices[2] = 'loading';
+      this.formula.latex_choices[3] = 'loading';
+      this.formula.latex_hint = 'loading';
 
       const body = await api.get(`/api/get/${db}/CH/${chapter}/SN/${sn}`);
       if (dev) await delay(500);
@@ -55,6 +64,13 @@ export const useEditorStore = defineStore('editor-source', {
         this.formula.choices[2] = nullCheck(data.choices[2]);
         this.formula.choices[3] = nullCheck(data.choices[3]);
         this.formula.hint = nullCheck(data.hint);
+
+        this.formula.latex_question = nullCheck(data.latex_question);
+        this.formula.latex_choices[0] = nullCheck(data.latex_choices[0]);
+        this.formula.latex_choices[1] = nullCheck(data.latex_choices[1]);
+        this.formula.latex_choices[2] = nullCheck(data.latex_choices[2]);
+        this.formula.latex_choices[3] = nullCheck(data.latex_choices[3]);
+        this.formula.latex_hint = nullCheck(data.latex_hint);
       }
     },
     async submitFormula(

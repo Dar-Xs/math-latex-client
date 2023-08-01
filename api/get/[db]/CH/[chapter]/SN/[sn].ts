@@ -88,6 +88,9 @@ function success(res: NextApiResponse, data: any) {
       question: data.QUESTION,
       choices: [data.CHOICE1, data.CHOICE2, data.CHOICE3, data.CHOICE4],
       hint: data.HINT,
+      latex_question: data.LATEX_QUESTION,
+      latex_choices: [data.LATEX_CHOICE1, data.LATEX_CHOICE2, data.LATEX_CHOICE3, data.LATEX_CHOICE4],
+      latex_hint: data.LATEX_HINT,
     },
   });
 }
