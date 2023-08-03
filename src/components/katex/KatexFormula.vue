@@ -22,7 +22,7 @@ const elementArr = computed(() => {
     }
     if (!elements[i].includes('$')) {
       //text
-      buffer.push(elements[i].replace('\n','</br>'));
+      buffer.push(elements[i].replaceAll('\n','</br>'));
       continue;
     }
     const inlineEles = elements[i].split('$');
@@ -31,7 +31,7 @@ const elementArr = computed(() => {
       if (j % 2 != 0) {
         buffer.push(' ' + renderMath(inlineEles[j]) + ' ');
       } else {
-        buffer.push(inlineEles[j].replace('\n','</br>'));
+        buffer.push(inlineEles[j].replaceAll('\n','</br>'));
       }
     }
   }

@@ -2,7 +2,6 @@
   <Question
     :question="questionStore.questionData.question"
     :choices="questionStore.questionData.choices"
-    :answer-index="questionStore.questionData.answer"
     :hint="questionStore.questionData.hint"
     :difficulty="questionStore.questionData.difficulty"
     :questionId="questionId"

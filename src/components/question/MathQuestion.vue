@@ -25,7 +25,7 @@
       <q-card-section class="q-pb-xs">
         <q-option-group v-model="group" :options="options" color="primary">
           <template v-slot:label="opt">
-            <span class="row items-center">
+            <span class="row">
               <span
                 :class="[
                   'q-pr-xs',
@@ -124,16 +124,23 @@ import PushButton from '../PushButton.vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-const props = defineProps<{
-  question: string;
-  choices: string[];
-  answerIndex: number;
-  hint: string;
-  random?: boolean;
-  difficulty: number;
-  questionId: number;
-  loading?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    question: string;
+    choices: string[];
+    answerIndex?: number;
+    hint: string;
+    random?: boolean;
+    difficulty: number;
+    questionId: number;
+    loading?: boolean;
+  }>(),
+  {
+    answerIndex: 0,
+    random: false,
+    loading: false,
+  }
+);
 
 // 判断是否渲染latex
 const imgMod = computed(() => {
@@ -146,8 +153,13 @@ for (let i = 0; i < props.choices.length; i++) {
   map.push(i);
 }
 let label = toRef(props, 'loading');
-watch(label, () => {
+if (props.random) {
   shuffle(map);
+}
+watch(label, () => {
+  if (props.random) {
+    shuffle(map);
+  }
 });
 
 const options = computed(() => {
@@ -189,11 +201,15 @@ const diffTag = computed(() => {
   return ans;
 });
 
-
-
 const goto = (offset: number) => {
-  check.value = false
-  router.push({name: 'single-question',params:{...router.currentRoute.value.params,sn:props.questionId+offset}});
+  check.value = false;
+  router.push({
+    name: 'single-question',
+    params: {
+      ...router.currentRoute.value.params,
+      sn: props.questionId + offset,
+    },
+  });
 };
 </script>
 
