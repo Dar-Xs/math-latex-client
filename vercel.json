@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/GPT/*.ts": {
-      "runtime": "edge"
-    }
-  }
-}

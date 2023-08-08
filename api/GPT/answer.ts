@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const body = await req.json();
   if (body.key !== process.env.AccessKey || !body.question || !body.hint || !body.answer) {
     return NextResponse.json({
@@ -71,3 +71,6 @@ export default async function POST(req: NextRequest) {
 }
 
 export const runtime = 'edge';
+export const config = {
+  runtime: 'edge',
+};
