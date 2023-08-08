@@ -3,7 +3,12 @@ import axios from 'axios';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  if (body.key !== process.env.AccessKey || !body.question || !body.hint || !body.answer) {
+  if (
+    body.key !== process.env.AccessKey ||
+    !body.question ||
+    !body.hint ||
+    !body.answer
+  ) {
     return NextResponse.json({
       success: false,
       message: 'Invalid input',
@@ -11,7 +16,15 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const data = JSON.stringify({
+  const myHeaders = new Headers();
+  myHeaders.append('Cache-Control', 'no-store');
+  myHeaders.append(
+    'Authorization',
+    `Bearer ${process.env.OPENAI_API_KEY}`,
+  );
+  myHeaders.append('Content-Type', 'application/json');
+
+  const raw = JSON.stringify({
     messages: [
       {
         role: 'system',
@@ -35,20 +48,13 @@ export async function POST(req: NextRequest) {
     top_p: 1,
   });
 
-  const config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: 'https://api.openai.com/v1/chat/completions',
-    headers: {
-      'Cache-Control': 'no-store',
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    data: data,
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
   };
 
-  axios
-    .request(config)
+  fetch('https://api.openai.com/v1/chat/completions', requestOptions)
     .then((response: any) => {
       const newHeaders = new Headers(response.headers);
       newHeaders.delete('www-authenticate');
@@ -70,7 +76,7 @@ export async function POST(req: NextRequest) {
     });
 }
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 export const config = {
   runtime: 'edge',
 };
