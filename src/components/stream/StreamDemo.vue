@@ -55,8 +55,8 @@ const fetchAPI = async () => {
       console.log(buffer);
       break;
     }
-    if (buffer.includes('\n')) {
-      const chunks = buffer.split('\n');
+    if (buffer.includes('\n\n')) {
+      const chunks = buffer.split('\n\n');
       for (let i = 0; i < chunks.length - 1; ++i) {
         handler(chunks[i]);
       }
