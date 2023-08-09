@@ -34,15 +34,35 @@ const fetchAPI = async () => {
   }
   const reader = response.body.getReader();
   const decoder = new TextDecoder('utf-8');
-
+  let buffer = '';
+  const handler = (str: string) => {
+    if (str === 'data: [DONE]') {
+      console.log(str);
+      return;
+    }
+    formula.value =
+      formula.value +
+      JSON.parse(str.substring(6))
+        .choices.map((x: { delta: { content: string } }) => x.delta.content)
+        .join('');
+  };
   while (true) {
     const { value, done } = await reader.read();
     if (done) break;
-    const data = decoder.decode(value,{stream:true});
-    console.log('Received', data);
+    const data = decoder.decode(value, { stream: true });
+    buffer += data;
+    if (buffer.startsWith('{')) {
+      console.log(buffer);
+      break;
+    }
+    if (buffer.includes('\n')) {
+      const chunks = buffer.split('\n');
+      for (let i = 0; i < chunks.length - 1; ++i) {
+        handler(chunks[i]);
+      }
+      buffer = chunks[chunks.length - 1];
+    }
   }
   decoder.decode();
-
-  console.log('Response fully received');
 };
 </script>
