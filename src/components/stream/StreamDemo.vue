@@ -6,7 +6,7 @@
     type="password"
     hint="Password"
   />
-  <q-btn push label="fetch" icon="keyboard_arrow_left" @click="fetchAPI" />
+  <q-btn push label="fetch" @click="fetchAPI" />
   <KatexFormula :formula="formula" />
 </template>
 

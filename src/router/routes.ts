@@ -57,6 +57,11 @@ const routes: RouteRecordRaw[] = [
             component: () =>
               import('components/catalogue/ChapterCatalogue.vue'),
           },
+          {
+            path: 'stream',
+            component: () =>
+              import('components/stream/StreamDemo.vue'),
+          },
         ],
       },
       {
