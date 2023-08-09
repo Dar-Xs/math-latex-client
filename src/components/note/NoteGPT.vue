@@ -160,7 +160,7 @@ const canvasOCR = async () => {
   
   // Create a FormData instance
   const formData = new FormData();
-  formData.append('image', dataURLtoBlob(imageURL));
+  formData.append('file', dataURLtoBlob(imageURL));
 
   // Submit using axios
   try {
