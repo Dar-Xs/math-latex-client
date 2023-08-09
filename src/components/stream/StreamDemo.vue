@@ -7,7 +7,7 @@
     hint="Password"
   />
   <q-btn push label="fetch" @click="fetchAPI" />
-  <KatexFormula :formula="formula" />
+  <KatexFormula :formula="formula" no-error/>
 </template>
 
 <script setup lang="ts">
@@ -36,8 +36,8 @@ const fetchAPI = async () => {
   const decoder = new TextDecoder('utf-8');
   let buffer = '';
   const handler = (str: string) => {
-    console.log(str);
     if (str === 'data: [DONE]') {
+      console.debug('GPT API done');
       return;
     }
     formula.value =

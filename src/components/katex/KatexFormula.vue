@@ -8,6 +8,7 @@ import { computed } from 'vue';
 
 const props = defineProps<{
   formula: string;
+  noError?: boolean;
 }>();
 
 const elementArr = computed(() => {
@@ -22,7 +23,7 @@ const elementArr = computed(() => {
     }
     if (!elements[i].includes('$')) {
       //text
-      buffer.push(elements[i].replaceAll('\n','</br>'));
+      buffer.push(elements[i].replaceAll('\n', '</br>'));
       continue;
     }
     const inlineEles = elements[i].split('$');
@@ -31,7 +32,7 @@ const elementArr = computed(() => {
       if (j % 2 != 0) {
         buffer.push(' ' + renderMath(inlineEles[j]) + ' ');
       } else {
-        buffer.push(inlineEles[j].replaceAll('\n','</br>'));
+        buffer.push(inlineEles[j].replaceAll('\n', '</br>'));
       }
     }
   }
@@ -39,9 +40,18 @@ const elementArr = computed(() => {
 });
 
 function renderMath(formula: string, block = false) {
-  return katex.renderToString(formula, {
-    throwOnError: false,
-    displayMode: block,
-  });
+  let ans = '';
+  try {
+    console.log(props.noError);
+    ans = katex.renderToString(formula, {
+      throwOnError: props.noError,
+      displayMode: block,
+    });
+  } catch (error) {
+    console.log('Error', error);
+    ans = '';
+  } finally {
+    return ans;
+  }
 }
 </script>
