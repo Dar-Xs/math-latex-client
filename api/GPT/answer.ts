@@ -52,28 +52,30 @@ export async function POST(req: NextRequest) {
     body: raw,
   };
 
-  fetch('https://api.openai.com/v1/chat/completions', requestOptions)
-    .then((response: any) => {
-      const newHeaders = new Headers(response.headers);
-      newHeaders.delete('www-authenticate');
-      // to disable nginx buffering
-      newHeaders.set('X-Accel-Buffering', 'no');
-      return new Response(response.body, {
-        status: response.status,
-        statusText: response.statusText,
-        headers: newHeaders,
-      });
-    })
-    .catch((error: any) => {
-      console.log(error);
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: error.message,
-          data: {},
-        })
-      );
+  try {
+    const response = await fetch(
+      'https://api.openai.com/v1/chat/completions',
+      requestOptions
+    );
+    const newHeaders = new Headers(response.headers);
+    newHeaders.delete('www-authenticate');
+    // to disable nginx buffering
+    newHeaders.set('X-Accel-Buffering', 'no');
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders,
     });
+  } catch (error: any) {
+    console.log(error);
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: error.message,
+        data: {},
+      })
+    );
+  }
 }
 
 export const config = {
