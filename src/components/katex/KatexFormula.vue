@@ -42,13 +42,11 @@ const elementArr = computed(() => {
 function renderMath(formula: string, block = false) {
   let ans = '';
   try {
-    console.log(props.noError);
     ans = katex.renderToString(formula, {
       throwOnError: props.noError,
       displayMode: block,
     });
   } catch (error) {
-    console.log('Error', error);
     ans = '';
   } finally {
     return ans;
