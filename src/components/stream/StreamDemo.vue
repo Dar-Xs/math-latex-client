@@ -38,9 +38,10 @@ const fetchAPI = async () => {
   while (true) {
     const { value, done } = await reader.read();
     if (done) break;
-    const data = decoder.decode(value);
+    const data = decoder.decode(value,{stream:true});
     console.log('Received', data);
   }
+  decoder.decode();
 
   console.log('Response fully received');
 };
