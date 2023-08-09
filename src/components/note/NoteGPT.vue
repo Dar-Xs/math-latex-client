@@ -68,8 +68,11 @@
         <div style="margin-top: 1rem"></div>
         <div ref="canvasWrapper" class="canvas-wrapper" style="flex: 1 1 auto">
           <canvas
-            ref="canvas"
-            style="border: 1px solid rgba(0, 0, 0, 0.24); border-radius: 0.5rem"
+            id="canvas"
+            style="
+              border: 1px solid rgba(0, 0, 0, 0.24);
+              border-radius: 0.25rem;
+            "
           ></canvas>
         </div>
       </q-page>
@@ -118,13 +121,10 @@ onUnmounted(() => {
 // 初始化画板
 function initCanvas() {
   if (canvasWrapper.value) {
-    canvas.value = new fabric.Canvas(
-      canvasWrapper.value.children[0] as HTMLCanvasElement,
-      {
-        isDrawingMode: true,
-        backgroundColor: 'white', // 设置背景色为白色
-      }
-    );
+    canvas.value = new fabric.Canvas('canvas', {
+      isDrawingMode: true,
+      backgroundColor: 'white', // 设置背景色为白色
+    });
     canvas.value.freeDrawingBrush.width = 5; // 设置线宽
     canvas.value.freeDrawingBrush.color = 'black'; // 设置画笔颜色为黑色
 
@@ -155,30 +155,36 @@ const clearCanvas = () => {
 
 const canvasOCR = async () => {
   if (!canvas.value) return;
-  const imageURL = canvas.value.toDataURL({ format: 'jpeg', multiplier: 0.25 });
+  const imageURL = canvas.value.toDataURL({ format: 'jpeg', multiplier: 0.5 });
+  console.log(imageURL);
+  
   // Create a FormData instance
   const formData = new FormData();
-    formData.append('image', dataURLtoBlob(imageURL));
+  formData.append('image', dataURLtoBlob(imageURL));
 
-    // Submit using axios
-    try {
-      const response = await axios.post('https://server.simpletex.cn/api/latex_ocr', formData, {
+  // Submit using axios
+  try {
+    const response = await axios.post(
+      'https://server.simpletex.cn/api/latex_ocr',
+      formData,
+      {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'token': import.meta.env.VITE_Simpletex_API_Key
-        }
-      });
-      return response.data.res.latex;
-    } catch (error) {
-      console.error("Error submitting the image:", error);
-    }
+          token: import.meta.env.VITE_Simpletex_API_Key,
+        },
+      }
+    );
+    return response.data.res.latex;
+  } catch (error) {
+    console.error('Error submitting the image:', error);
+  }
 };
 
 // Convert DataURL to Blob for FormData
 function dataURLtoBlob(dataurl: string): Blob {
   const arr = dataurl.split(',');
   const matchResult = arr[0].match(/:(.*?);/);
-  
+
   if (!matchResult) {
     throw new Error('Invalid DataURL format');
   }
@@ -192,7 +198,6 @@ function dataURLtoBlob(dataurl: string): Blob {
   }
   return new Blob([u8arr], { type: mime });
 }
-
 
 const GPTAnswer = ref('');
 const fetchAPI = async () => {
