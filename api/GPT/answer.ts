@@ -1,5 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
-import axios from 'axios';
+import type { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -9,19 +8,18 @@ export async function POST(req: NextRequest) {
     !body.hint ||
     !body.answer
   ) {
-    return NextResponse.json({
-      success: false,
-      message: 'Invalid input',
-      data: {},
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: 'Invalid input',
+        data: {},
+      })
+    );
   }
 
   const myHeaders = new Headers();
   myHeaders.append('Cache-Control', 'no-store');
-  myHeaders.append(
-    'Authorization',
-    `Bearer ${process.env.OPENAI_API_KEY}`,
-  );
+  myHeaders.append('Authorization', `Bearer ${process.env.OPENAI_API_KEY}`);
   myHeaders.append('Content-Type', 'application/json');
 
   const raw = JSON.stringify({
@@ -68,15 +66,16 @@ export async function POST(req: NextRequest) {
     })
     .catch((error: any) => {
       console.log(error);
-      return NextResponse.json({
-        success: false,
-        message: error.message,
-        data: {},
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: error.message,
+          data: {},
+        })
+      );
     });
 }
 
-// export const runtime = 'edge';
 export const config = {
   runtime: 'edge',
 };
