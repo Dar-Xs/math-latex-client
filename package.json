@@ -16,6 +16,7 @@
     "@quasar/extras": "^1.16.5",
     "axios": "^1.2.1",
     "clipboard": "^2.0.11",
+    "fabric": "^5.3.0",
     "katex": "^0.16.8",
     "next": "^13.4.9",
     "pinia": "^2.0.11",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.4.3",
+    "@types/fabric": "^5.3.3",
     "@types/katex": "^0.16.1",
     "@types/node": "^12.20.21",
     "@types/tablestore": "^5.1.0",
