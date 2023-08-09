@@ -36,8 +36,8 @@ const fetchAPI = async () => {
   const decoder = new TextDecoder('utf-8');
   let buffer = '';
   const handler = (str: string) => {
+    console.log(str);
     if (str === 'data: [DONE]') {
-      console.log(str);
       return;
     }
     formula.value =
