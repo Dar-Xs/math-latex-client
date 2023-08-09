@@ -155,7 +155,7 @@ const clearCanvas = () => {
 
 const canvasOCR = async () => {
   if (!canvas.value) return;
-  const imageURL = canvas.value.toDataURL({ format: 'png' });
+  const imageURL = canvas.value.toDataURL({ format: 'jpeg', multiplier: 0.25 });
   // Create a FormData instance
   const formData = new FormData();
     formData.append('image', dataURLtoBlob(imageURL));
