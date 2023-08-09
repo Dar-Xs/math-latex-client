@@ -33,11 +33,13 @@ const fetchAPI = async () => {
     return;
   }
   const reader = response.body.getReader();
+  const decoder = new TextDecoder('utf-8');
 
   while (true) {
     const { value, done } = await reader.read();
     if (done) break;
-    console.log('Received', value);
+    const data = decoder.decode(value);
+    console.log('Received', data);
   }
 
   console.log('Response fully received');
